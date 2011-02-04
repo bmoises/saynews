@@ -1,7 +1,13 @@
 $:.unshift File.join(File.dirname(__FILE__),'..','lib')
 require 'saynews.rb'
 
-a = NewYorker.new({:uri => ARGV.first})
+url = ARGV.first
+
+url =~ /www.(.*?).com/; 
+klass = $1.capitalize
+Klass = Kernel.const_get(klass)
+
+a = Klass.new({:uri => url})
 a.download
 
 reader = Reader.new(a)

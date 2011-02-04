@@ -1,4 +1,4 @@
-class NewYorker < Downloader
+class Newyorker < Downloader
   
   def url
     u = super
