@@ -8,6 +8,7 @@ reader = Reader.new(a)
 
 # trap("SIGINT","IGNORE") { 
 trap("SIGINT") { 
+  reader.done = true
   reader.count += 1 
 }
 

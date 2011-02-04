@@ -9,7 +9,7 @@ class NewYorker < Downloader
     res = []
     doc = Nokogiri::HTML(content)
     doc.css('div#articletext p').each do |paragraph|
-      res << paragraph.content.wrap(WORD_WRAP)
+      res << paragraph.content.sentences
     end
     res.join("\n")
   end

@@ -35,6 +35,9 @@ class String
 
   end
 
+  def sentences
+    self.split(".").join(".\n")
+  end
   def tail!(pos)
     self[0..pos] = ""
     strip!

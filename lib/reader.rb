@@ -17,7 +17,7 @@ class Reader
   end
   
   def stop?
-    @count % 2 == 0 ? true : false
+    @done ? true : false
   end
   
   def say(what_to_say)
