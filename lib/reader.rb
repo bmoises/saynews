@@ -1,19 +1,23 @@
 class Reader
 
-  attr_accessor :done
+  attr_accessor :done, :count
   def initialize(downloader)
     @downlaoder = downloader
+    @count = 0
   end
   
   def read
     @downlaoder.read_file do |line|
       say(line)
-      if @done
+      if stop?
         say("You cancelled the reading")
         break
       end
     end
-    output
+  end
+  
+  def stop?
+    @count % 2 == 0 ? true : false
   end
   
   def say(what_to_say)
