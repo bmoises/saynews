@@ -36,6 +36,7 @@ class String
   end
 
   def sentences
+    # TODO: do a look ahead to account for quotes
     self.split(".").join(".\n")
   end
   def tail!(pos)

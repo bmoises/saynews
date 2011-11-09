@@ -8,7 +8,7 @@ class Newyorker < Downloader
   def parse(content)
     res = []
     doc = Nokogiri::HTML(content)
-    doc.css('div#articletext p').each do |paragraph|
+    doc.css('article p').each do |paragraph|
       res << paragraph.content.sentences
     end
     res.join("\n")
