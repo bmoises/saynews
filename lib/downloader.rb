@@ -1,5 +1,5 @@
 class Downloader
-  attr_accessor :mech, :opts, :uri
+  attr_accessor :mech, :opts, :uri, :cached_file, :resume
   
   WORD_WRAP = 60
   
@@ -20,6 +20,29 @@ class Downloader
     end
   end
   
+  def save_resume_point!(line)
+    File.open(resume_point_file, "w") do |file|
+      puts "#{cached_file}||#{line}"
+      file.puts "#{cached_file}||#{line}"
+    end
+  end
+  
+  def delete_resume_point!
+    FileUtils.rm resume_point_file 
+  end
+  
+  def resume_point_file
+    File.join(SAYNEWS_CACHE,"resume")
+  end
+  
+  def resume_data
+    begin
+      @resume_data ||= File.open(resume_point_file).read.split("||")
+    rescue
+      @resume = false
+    end
+  end
+  
   def url
     @uri
   end
@@ -29,7 +52,7 @@ class Downloader
   end
   
   def cached_file
-    File.join(SAYNEWS_CACHE,Digest::MD5.hexdigest(url))
+    @cached_file ||= File.join(SAYNEWS_CACHE,Digest::MD5.hexdigest(url))
   end
   
   def file_exists?
@@ -37,7 +60,14 @@ class Downloader
   end
   
   def read_file
+    resume_from = resume_data && resume_data[1]
     File.open(cached_file).each_line do |line|
+      if @resume && line != resume_from
+        next
+      else
+        @resume = false # stop fastforward
+      end
+      save_resume_point!(line)
       yield line
     end
   end
