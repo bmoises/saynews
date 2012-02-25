@@ -1,0 +1,7 @@
+== Saynews
+Uses OSX's built in say command to read news articles from the terminal.
+
+== Usage
+ruby ruby bin/saynews.rb ARTICLE_URL
+
+where ARTICLE_URL is an article url for sites supported(see lib/sites)
