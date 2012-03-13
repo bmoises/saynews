@@ -48,7 +48,7 @@ class Downloader
   end
   
   def parse(content)
-    raise "Implement in your class biotch"
+    raise "Implement in your class"
   end
   
   def cached_file
